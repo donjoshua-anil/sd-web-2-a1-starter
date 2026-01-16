@@ -68,6 +68,45 @@ function renderAgeFiltereList(array, ageThreshold,listId){
   }
 renderAgeFiltereList(characters, 40, 'age-filter-list');
 
+function renderListWithErrorHandling(array, listId, errorId) {
+  const ul = document.getElementById(listId);
+  const errorDiv = document.getElementById(errorId);
+
+  
+  ul.innerHTML = '';
+  errorDiv.innerHTML = '';
+
+  for (let i = 0; i < array.length; i++) {
+    const li = document.createElement('li');
+
+    try {
+      
+      if (!array[i].name) {
+        throw new Error(`Item at index ${i} is missing a "name" property.`);
+      }
+
+      li.textContent = array[i].name;
+      ul.appendChild(li);
+    } catch (error) {
+      
+      const p = document.createElement('p');
+      p.textContent = error.message;
+      errorDiv.appendChild(p);
+    }
+  }
+}
+renderListWithErrorHandling(characters, 'error-handling-list', 'error-messages');
+
+const brokenCharacters = [
+  { id: 1, name: "Luke Skywalker", age: 23 },
+  { id: 2, age: 45 }, // missing name
+  { id: 3, name: "Princess Leia", age: 23 },
+  { id: 4 }, // missing name
+  { id: 5, name: "Yoda", age: 900 }
+];
+
+renderListWithErrorHandling(brokenCharacters, 'broken-array-list', 'broken-array-errors');
+
 // broken test data for exercise 6
 
 // 1. Iterate through the characters array and output each character's name to the console using console.log(). Then, dynamically create <li> elements for each character name and append them to the HTML unordered list element with the id "names-list".
