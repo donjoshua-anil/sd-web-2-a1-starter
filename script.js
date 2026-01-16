@@ -2,7 +2,7 @@
 
 // sample data - expanded Star Wars characters with varied ages
 const characters = [
-  { id: 1, name: "Luke Skywalker" age: 23 },
+  { id: 1, name: "Luke Skywalker", age: 23 },
   { id: 2, name: "Darth Vader", age: 45 },
   { id: 3, name: "Princess Leia", age: 23 },
   { id: 4, name: "Obi-Wan Kenobi", age: 57 },
@@ -13,6 +13,60 @@ const characters = [
   { id: 9, name: "C-3PO", age: 112 },
   { id: 10, name: "Padmé Amidala", age: 27 },
 ];
+
+const namesList = document.getElementById("names-list");
+
+for (let i = 0; i < characters.length; i++) {
+  const li = document.createElement("li");
+  li.textContent = characters[i].name;
+  namesList.appendChild(li);
+}
+
+const youngList = document.getElementById("young-characters-list");
+
+for (let i =0; i<characters.length; i++){
+  if (characters[i].age<40) 
+    { const li=document.createElement("li");
+      li.textContent=characters[i].name;
+      youngList.appendChild(li);
+    }
+}
+
+function renderCharacterList(array,listId){
+  const ul = document.getElementById(listId);
+
+  ul.innerHTML= '';
+
+  for (let i = 0; i <array.length; i++){
+    const li= document.createElement("li");
+    if (array[i].name) {
+      li.textContent=array[i].name    }
+      else{li.textContent='unnamed character';}
+
+      ul.appendChild(li);
+  }
+}
+renderCharacterList(characters, 'function-list');
+
+function renderAgeFiltereList(array, ageThreshold,listId){
+  const ul = document.getElementById(listId);
+
+  ul.innerHTML='';
+  for(let i=0;i<array.length; i++){
+    if (array[i].age !== undefined && array[i].age < ageThreshold) {
+      const li = document.createElement('li');
+    
+      if(array[i].name){
+        li.textContent=array[i].name +' (' + array[i].age + ' years old)';
+      } else {
+        li.textContent = 'Unnamed Character';
+      }
+
+      ul.appendChild(li);
+      }
+    }
+  }
+renderAgeFiltereList(characters, 40, 'age-filter-list');
 
 // broken test data for exercise 6
 
